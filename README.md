@@ -56,3 +56,30 @@ books19-api/
         ├── swagger/ 
         ├── app.js 
     └── server.js
+
+
+---
+
+## 📄 API Documentation
+
+Swagger UI is available at: [Swagger](http://localhost:3000/api-docs)
+
+---
+
+## 🧪 Running Locally
+
+```bash
+# Clone the repo
+git clone https://github.com/repsorp39/books19-api.git
+
+# Navigate into the directory
+cd books19-api
+
+# Install dependencies
+npm install
+
+# Create a .env file (example below)
+cp .env.example .env
+
+# Start the development server
+npm run dev
