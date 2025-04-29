@@ -1,0 +1,58 @@
+# 📚 Books19 API
+
+Books19 is a RESTful API that allows users to authenticate, read books, track their reading progress, and manage their bookmarked and starred books.
+
+---
+
+## 🚀 Features
+
+- ✅ User authentication (login/register)
+- 📖 Access and read books
+- 📊 Track reading progress
+- 🔖 Bookmark books to check later
+- ⭐ Star books for quick access
+
+---
+
+## 🛠️ Tech Stack
+
+- Node.js / Express.js
+- MongoDB 
+- JWT (JSON Web Tokens) for authentication
+- Swagger for API documentation
+
+
+## 🔐 Authentication
+
+Books19 uses **JWT** for authentication. After login or registration, you'll receive a token to include in your headers:
+
+```js
+  Authorization: Bearer <your-token>
+```
+
+
+---
+
+## 📘 API Endpoints
+
+| Method | Endpoint               | Description                     | Auth Required |
+|--------|------------------------|----------------------------------|----------------|
+| POST   | `/api/v1/auth/register`| Register a new user              | ❌             |
+| POST   | `/api/v1/auth/login`   | Login a user                     | ❌             |
+
+
+---
+
+## 📂 Project Structure
+
+books19-api/
+    ├──/src  
+        ├── controllers/ 
+        ├── models/ 
+        ├── routes/ 
+        ├── middleware/ 
+        ├── config/ 
+        ├── utils/ 
+        ├── swagger/ 
+        ├── app.js 
+    └── server.js
