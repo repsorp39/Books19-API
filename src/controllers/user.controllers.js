@@ -10,6 +10,7 @@ const {
     sendWelcomeMessage, 
     sendResetPasswordEmail 
 } = require("../utils/email-sender");
+const assertItIsAMongoId = require("../helpers/mongo-id-checker");
 
 const Register = asyncHandler(async (req,res,next) => {
     const { error,value:userInfo } = userSchema.validate(req.body ?? {},{abortEarly:false});//abort early to show all validations errors at the same time
@@ -113,6 +114,7 @@ const EditPassword = asyncHandler(async (req,res,next)=>{
 
 
 const GetUserInfo = asyncHandler(async (req,res,next)=>{
+    assertItIsAMongoId(req.userid);
     const userInfo = await User.findById(req.userid);
     res.status(200).json(userInfo);
 });

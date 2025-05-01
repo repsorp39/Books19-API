@@ -1,6 +1,16 @@
-const { GetBooks, GetSingleBook } = require('../controllers/books.controllers');
-
 const router = require('express').Router();
+const { 
+    GetBooks, 
+    GetSingleBook, 
+    GetCategories, 
+    GetLanguages, 
+    GetBookByLanguage,
+    GetBookByCategory,
+    ManageUserBookPreference,
+    UpdateReadingProgress
+} = require('../controllers/books.controllers');
+const userAuth = require('../middlewares/user-auth');
+
 
 /**
  * @swagger
@@ -65,6 +75,23 @@ const router = require('express').Router();
  *           description: Short summary of the plot
  */
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Lang:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The primary key of the language or categorie
+ *           example: 6812c781d29a8c2e9e733a5f
+ *         wording:
+ *           type: string
+ *           description: The name of the categorie or of the languages
+ * */
+
 /**
  * @swagger
  * /books:
@@ -90,9 +117,10 @@ const router = require('express').Router();
  */
 router.get('/', GetBooks);
 
+
 /**
  * @swagger
- * /books/{bookid}:
+ * /books/one/{bookid}:
  *   get:
  *     summary: Get book by id
  *     parameters:
@@ -113,6 +141,143 @@ router.get('/', GetBooks);
  *             schema:
  *                $ref: '#/components/schemas/Book'
  */
-router.get('/:bookid', GetSingleBook);
+router.get('/one/:bookid', GetSingleBook);
+
+
+/**
+ * @swagger
+ * /books/categories:
+ *   get:
+ *     summary: Get all available categories
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: Books categories array
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Lang'
+ */
+router.get('/categories', GetCategories);
+
+
+/**
+ * @swagger
+ * /books/languages:
+ *   get:
+ *     summary: Get all available languages
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: languages array
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Lang'
+ */
+router.get('/languages', GetLanguages);
+
+/**
+ * @swagger
+ * /books/categories/{category}:
+ *   get:
+ *     summary: Get alls books in the specified category
+ *     parameters:
+ *       - in: path
+ *         name: category
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: the wording of the categorie to be fetched
+ *     description: Provide book based on category
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/languages/:lang',GetBookByLanguage);
+
+
+/**
+ * @swagger
+ * /books/languages/{lang}:
+ *   get:
+ *     summary: Get alls books in the specified languages
+ *     parameters:
+ *       - in: path
+ *         name: lang
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: the wording of the lang to be fetched
+ *     description: Provide book based on language
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/categories/:category',GetBookByCategory);
+
+
+/**
+ * @swagger
+ * /books/{action}/{bookid}:
+ *   patch:
+ *     summary: Set a book as downloaded,starred or bookmarked
+ *     parameters:
+ *       - in: path
+ *         name: action
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: bookmarked | starred | downloaded
+ *       - in: path
+ *         name: bookid
+ *         required: true
+ *         schema:
+ *           type: string
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ */
+router.patch("/:action/:bookid", userAuth, ManageUserBookPreference);
+
+/**
+ * @swagger
+ * /books/trackprogress:
+ *   patch:
+ *     summary: Define the number of page read
+ *     tags:
+ *       - Books
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - bookid
+ *               - pageRead
+ *             properties:
+ *               bookid:
+ *                 type: string
+ *               pageRead:
+ *                 type: number
+ */
+router.patch("/trackprogress",userAuth, UpdateReadingProgress);
 
 module.exports = router;
