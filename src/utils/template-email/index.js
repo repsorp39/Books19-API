@@ -80,7 +80,10 @@ function getWelcomeMessageTemplate(fullname){
         <body>
         <div class="container">
             <div class="header">
-            <img src="${process.env.BASE_URL}/books19.png" alt="Books19 Logo">
+            <img 
+            src="https://books19-assets.onrender.com/images/books19.png" 
+            alt="Books19 Logo"
+            />
             <h1>Welcome to Books19</h1>
             </div>
             <div class="content">
@@ -263,7 +266,10 @@ function getPasswordResetTemplate(resetLink){
     <body>
     <div class="container">
         <div class="header">
-        <img src=${process.env.BASE_URL}/books19.png />
+         <img 
+            src="https://books19-assets.onrender.com/images/books19.png" 
+            alt="Books19 Logo"
+        />
         <h1>Password Reset Request</h1>
         </div>
         <div class="content">

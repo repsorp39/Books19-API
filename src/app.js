@@ -66,8 +66,7 @@ app.use("/", express.static(path.join(__dirname,"public")));
 
 //routes
 app.use("/api/v1/auth",require("./routes/auth.route"));
-
-
+app.use("/api/v1/books",require("./routes/books.route"));
 //error handling
 app.use(errorHandler);
 

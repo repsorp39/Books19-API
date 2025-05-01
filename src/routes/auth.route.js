@@ -25,9 +25,9 @@ const authUser      = require("../middlewares/user-auth");
     *         password:
     *           type: string
     *           description: The user's password
-    *         provider:
+    *         pseudo:
     *           type: string
-    *           description: Either google or twitter
+    *           description: The user's pseudo
     */
 
    /**
@@ -97,8 +97,6 @@ router.post("/login" ,authManager.Login)
     *     summary: Get user info
     *     tags:
     *       - Authentication
-    *     requestBody:
-    *       required: false
     *     responses:
     *       200:
     *         description: Basics users info
