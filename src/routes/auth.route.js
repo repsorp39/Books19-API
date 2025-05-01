@@ -1,108 +1,105 @@
-const router        = require("express").Router();
-const authManager   = require("../controllers/user.controllers");
-const authUser      = require("../middlewares/user-auth");
+const router = require('express').Router();
+const authManager = require('../controllers/user.controllers');
+const authUser = require('../middlewares/user-auth');
 
-    /**
-    * @swagger
-    * tags:
-    *   - name:  Authentication
-    *     description: Authentication endpoints
-    */
+/**
+ * @swagger
+ * tags:
+ *   - name:  Authentication
+ *     description: Authentication endpoints
+ */
 
-   /**
-    * @swagger
-    * components:
-    *   schemas:
-    *     User:
-    *       type: object
-    *       properties:
-    *         fullname:
-    *           type: string
-    *           description: The user's fullname
-    *         email:
-    *           type: string
-    *           description: The user's email
-    *         password:
-    *           type: string
-    *           description: The user's password
-    *         pseudo:
-    *           type: string
-    *           description: The user's pseudo
-    */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         fullname:
+ *           type: string
+ *           description: The user's fullname
+ *         email:
+ *           type: string
+ *           description: The user's email
+ *         password:
+ *           type: string
+ *           description: The user's password
+ *         pseudo:
+ *           type: string
+ *           description: The user's pseudo
+ */
 
-   /**
-    * @swagger
-    * components:
-    *   schemas:
-    *     UserCredentials:
-    *       type: object
-    *       properties:
-    *         email:
-    *           type: string
-    *           description: The user's email
-    *         password:
-    *           type: string
-    *           description: The user's password
-    */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserCredentials:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: The user's email
+ *         password:
+ *           type: string
+ *           description: The user's password
+ */
 
 // Routes definitions
 
 /**
-    * @swagger
-    * /auth/user:
-    *   post:
-    *     summary: Create a new user
-    *     tags:
-    *       - Authentication
-    *     requestBody:
-    *       required: true
-    *       content:
-    *         application/json:
-    *           schema:
-    *             $ref: '#/components/schemas/User'
-    *     responses:
-    *       201:
-    *         description: User created
-    */
+ * @swagger
+ * /auth/user:
+ *   post:
+ *     summary: Create a new user
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: User created
+ */
 
-router.post("/user" ,authManager.Register)
-
-
-/**
-    * @swagger
-    * /auth/login:
-    *   post:
-    *     summary: Login a new user
-    *     tags:
-    *       - Authentication   
-    *     requestBody:
-    *       required: true
-    *       content:
-    *         application/json:
-    *           schema:
-    *             $ref: '#/components/schemas/UserCredentials'
-    *     responses:
-    *       200:
-    *         description: User logged in
-    */
-
-router.post("/login" ,authManager.Login)
-
-
+router.post('/user', authManager.Register);
 
 /**
-    * @swagger
-    * /auth/user:
-    *   get:
-    *     summary: Get user info
-    *     tags:
-    *       - Authentication
-    *     responses:
-    *       200:
-    *         description: Basics users info
-    */
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login a new user
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserCredentials'
+ *     responses:
+ *       200:
+ *         description: User logged in
+ */
 
-router.get("/user", [authUser] ,authManager.GetUserInfo);
+router.post('/login', authManager.Login);
+
+/**
+ * @swagger
+ * /auth/user:
+ *   get:
+ *     summary: Get user info
+ *     tags:
+ *       - Authentication
+ *     responses:
+ *       200:
+ *         description: Basics users info
+ */
+
+router.get('/user', [authUser], authManager.GetUserInfo);
 
 /**
  * @swagger
@@ -132,8 +129,7 @@ router.get("/user", [authUser] ,authManager.GetUserInfo);
  *         description: Invalid token or missing required fields
  */
 
-router.post("/google-login", authManager.AuthWithGoogle);
-
+router.post('/google-login', authManager.AuthWithGoogle);
 
 /**
  * @swagger
@@ -157,7 +153,7 @@ router.post("/google-login", authManager.AuthWithGoogle);
  *                 description: Current user password
  *               newPassword:
  *                 type: string
- *                 description: New password to set 
+ *                 description: New password to set
  *     responses:
  *       200:
  *         description: Updated successfully!
@@ -165,7 +161,7 @@ router.post("/google-login", authManager.AuthWithGoogle);
  *         description: Invalid password or missing required fields
  */
 
-router.patch("/password-edit",[authUser], authManager.EditPassword);
+router.patch('/password-edit', [authUser], authManager.EditPassword);
 
 /**
  * @swagger
@@ -193,13 +189,13 @@ router.patch("/password-edit",[authUser], authManager.EditPassword);
  *         description: Missing email
  */
 
-router.post("/password-reset-email", authManager.HandleResetEmailPassword);
+router.post('/password-reset-email', authManager.HandleResetEmailPassword);
 
 /**
  * @swagger
  * /auth/password-reset:
  *   put:
- *     summary: Reset password 
+ *     summary: Reset password
  *     tags:
  *       - Authentication
  *     requestBody:
@@ -228,9 +224,6 @@ router.post("/password-reset-email", authManager.HandleResetEmailPassword);
  *       400:
  *         description: Missing | invalid email,token or new password
  */
-router.put("/password-reset", authManager.ResetPassword);
+router.put('/password-reset', authManager.ResetPassword);
 
 module.exports = router;
-
-
-

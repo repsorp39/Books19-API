@@ -1,5 +1,5 @@
-function getWelcomeMessageTemplate(fullname){
-    return `<!DOCTYPE html>
+function getWelcomeMessageTemplate(fullname) {
+  return `<!DOCTYPE html>
         <html lang="en">
         <head>
         <meta charset="UTF-8">
@@ -105,12 +105,11 @@ function getWelcomeMessageTemplate(fullname){
         </div>
         </body>
         </html>
-        `
-    }
+        `;
+}
 
-
-function getErrorTemplateMessage(endpoint,name,message){
-    return `<!DOCTYPE html>
+function getErrorTemplateMessage(endpoint, name, message) {
+  return `<!DOCTYPE html>
             <html lang="fr">
             <head>
             <meta charset="UTF-8">
@@ -195,11 +194,11 @@ function getErrorTemplateMessage(endpoint,name,message){
             </div>
             </body>
             </html>
-`
+`;
 }
 
-function getPasswordResetTemplate(resetLink){
-    return `
+function getPasswordResetTemplate(resetLink) {
+  return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -288,11 +287,11 @@ function getPasswordResetTemplate(resetLink){
     </div>
     </body>
     </html>
-`
-};
+`;
+}
 
-module.exports = { 
-    getWelcomeMessageTemplate,
-    getErrorTemplateMessage,
-    getPasswordResetTemplate
+module.exports = {
+  getWelcomeMessageTemplate,
+  getErrorTemplateMessage,
+  getPasswordResetTemplate,
 };

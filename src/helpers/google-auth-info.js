@@ -1,9 +1,9 @@
-const { OAuth2Client } = require("google-auth-library");
+const { OAuth2Client } = require('google-auth-library');
 
 /**
  * Take a google token and return informations include in
- * 
- * @param {string} token 
+ *
+ * @param {string} token
  * @returns {object}
  */
 
@@ -12,25 +12,25 @@ async function checkGoogleToken(token) {
 
   try {
     const client = new OAuth2Client(uri);
-    const { payload } =  await client.verifyIdToken(
-        {  idToken:token, audience:uri  } 
-    );
-    
-    return {
-        isValid:true,
-        user:{
-            email:payload.email,
-            fullname:payload.name,
-            provider:"google",
-            pseudo:payload.given_name + String(Number(new Date)).slice(0,3) //generate a random pseudo based on firstname
-        }
-    }
+    const { payload } = await client.verifyIdToken({
+      idToken: token,
+      audience: uri,
+    });
 
+    return {
+      isValid: true,
+      user: {
+        email: payload.email,
+        fullname: payload.name,
+        provider: 'google',
+        pseudo: payload.given_name + String(Number(new Date())).slice(0, 3), //generate a random pseudo based on firstname
+      },
+    };
   } catch (error) {
-       return {
-            isValid:false,
-            user:null
-        };
+    return {
+      isValid: false,
+      user: null,
+    };
   }
 }
 

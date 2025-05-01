@@ -17,10 +17,9 @@ Books19 is a RESTful API that allows users to authenticate, read books, track th
 ## 🛠️ Tech Stack
 
 - Node.js / Express.js
-- MongoDB 
+- MongoDB
 - JWT (JSON Web Tokens) for authentication
 - Swagger for API documentation
-
 
 ## 🔐 Authentication
 
@@ -30,33 +29,30 @@ Books19 uses **JWT** for authentication. After login or registration, you'll rec
   Authorization: Bearer <your-token>
 ```
 
-
 ---
 
 ## 📘 API Endpoints
 
-| Method | Endpoint               | Description                     | Auth Required |
-|--------|------------------------|----------------------------------|----------------|
-| POST   | `/api/v1/auth/register`| Register a new user              | ❌             |
-| POST   | `/api/v1/auth/login`   | Login a user                     | ❌             |
-
+| Method | Endpoint                | Description         | Auth Required |
+| ------ | ----------------------- | ------------------- | ------------- |
+| POST   | `/api/v1/auth/register` | Register a new user | ❌            |
+| POST   | `/api/v1/auth/login`    | Login a user        | ❌            |
 
 ---
 
 ## 📂 Project Structure
 
 books19-api/
-    ├──/src  
-        ├── controllers/ 
-        ├── models/ 
-        ├── routes/ 
-        ├── middleware/ 
-        ├── config/ 
-        ├── utils/ 
-        ├── swagger/ 
-        ├── app.js 
-    └── server.js
-
+├──/src  
+ ├── controllers/
+├── models/
+├── routes/
+├── middleware/
+├── config/
+├── utils/
+├── swagger/
+├── app.js
+└── server.js
 
 ---
 
@@ -83,3 +79,4 @@ cp .env.example .env
 
 # Start the development server
 npm run dev
+```
