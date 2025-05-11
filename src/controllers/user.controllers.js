@@ -28,8 +28,9 @@ const Register = asyncHandler(async (req,res,next) => {
         sendWelcomeMessage(userInfo.email, userInfo.fullname)
         .then(()=>{});
     } catch (error) {
-        if(error.name === "ValidationError")
-            throw new HTTPError(409, `Email '${userInfo.email}' already exists.`)
+        if(error.name === "ValidationError"){
+            throw new HTTPError(409, `Email '${userInfo.email}' already exists.`);
+        }
     }
 });
 

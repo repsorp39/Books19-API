@@ -41,18 +41,19 @@ Books19 uses **JWT** for authentication. After login or registration, you'll rec
 ---
 
 ## 📂 Project Structure
-
+``` test
 books19-api/
 ├──/src  
- ├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── config/
-├── utils/
-├── swagger/
-├── app.js
+      ├── controllers/
+      ├── models/
+      ├── routes/
+      ├── middleware/
+      ├── config/
+      ├── utils/
+      ├── swagger/
+      ├── app.js
 └── server.js
+```
 
 ---
 

@@ -6,8 +6,15 @@ const {
     GetLanguages, 
     GetBookByLanguage,
     GetBookByCategory,
-    ManageUserBookPreference,
-    UpdateReadingProgress
+    UpdateReadingProgress,
+    SetUserBookState,
+    RemoveBookmarkOrStar,
+    GetBookmarkedBook,
+    GetDownloadedBook,
+    GetStarredBook,
+    GetBookInReadingState,
+    GetIdsOfUsersBooks,
+    FilterBook
 } = require('../controllers/books.controllers');
 const userAuth = require('../middlewares/user-auth');
 
@@ -75,7 +82,6 @@ const userAuth = require('../middlewares/user-auth');
  *           description: Short summary of the plot
  */
 
-
 /**
  * @swagger
  * components:
@@ -91,6 +97,7 @@ const userAuth = require('../middlewares/user-auth');
  *           type: string
  *           description: The name of the categorie or of the languages
  * */
+
 
 /**
  * @swagger
@@ -117,7 +124,6 @@ const userAuth = require('../middlewares/user-auth');
  */
 router.get('/', GetBooks);
 
-
 /**
  * @swagger
  * /books/one/{bookid}:
@@ -143,7 +149,6 @@ router.get('/', GetBooks);
  */
 router.get('/one/:bookid', GetSingleBook);
 
-
 /**
  * @swagger
  * /books/categories:
@@ -160,7 +165,6 @@ router.get('/one/:bookid', GetSingleBook);
  *               $ref: '#/components/schemas/Lang'
  */
 router.get('/categories', GetCategories);
-
 
 /**
  * @swagger
@@ -204,7 +208,6 @@ router.get('/languages', GetLanguages);
  */
 router.get('/languages/:lang',GetBookByLanguage);
 
-
 /**
  * @swagger
  * /books/languages/{lang}:
@@ -230,7 +233,6 @@ router.get('/languages/:lang',GetBookByLanguage);
  */
 router.get('/categories/:category',GetBookByCategory);
 
-
 /**
  * @swagger
  * /books/{action}/{bookid}:
@@ -254,13 +256,38 @@ router.get('/categories/:category',GetBookByCategory);
  *       200:
  *         description: OK
  */
-router.patch("/:action/:bookid", userAuth, ManageUserBookPreference);
+router.patch("/:action/:bookid", userAuth, SetUserBookState);
+
+ /** 
+ * @swagger
+ * /books/{action}/{bookid}:
+ *   delete:
+ *     summary: Remove a bookmark or a star from a book
+ *     parameters:
+ *       - in: path
+ *         name: action
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: bookmarked | starred | downloaded
+ *       - in: path
+ *         name: bookid
+ *         required: true
+ *         schema:
+ *           type: string
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ */
+router.delete("/:action/:bookid", userAuth, RemoveBookmarkOrStar);
 
 /**
  * @swagger
  * /books/trackprogress:
  *   patch:
- *     summary: Define the number of page read
+ *     summary: Set the current page of the user on a particular book
  *     tags:
  *       - Books
  *     requestBody:
@@ -271,13 +298,99 @@ router.patch("/:action/:bookid", userAuth, ManageUserBookPreference);
  *             type: object
  *             required:
  *               - bookid
- *               - pageRead
+ *               - currentPage
  *             properties:
  *               bookid:
  *                 type: string
- *               pageRead:
+ *               currentPage:
  *                 type: number
  */
 router.patch("/trackprogress",userAuth, UpdateReadingProgress);
 
+/**
+ * @swagger
+ * /books/bookmarked:
+ *   get:
+ *     summary: Get books bookmarked
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/bookmarked/',userAuth, GetBookmarkedBook);
+
+/**
+ * @swagger
+ * /books/starred:
+ *   get:
+ *     summary: Get books starred
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/starred/',userAuth, GetStarredBook);
+
+/**
+ * @swagger
+ * /books/downloaded:
+ *   get:
+ *     summary: Get books downloaded
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/downloaded/',userAuth, GetDownloadedBook);
+
+/**
+ * @swagger
+ * /books/progress:
+ *   get:
+ *     summary: Get books in reading state
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/progress/',userAuth, GetBookInReadingState);
+
+/**
+ * @swagger
+ * /books/list-book-history:
+ *   get:
+ *     summary: Get all books ids user deal with starred,downloaded and bookmarked
+ *     tags:
+ *       - Books
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Book'
+ */
+router.get('/list-book-history',userAuth, GetIdsOfUsersBooks);
+
+router.get("/filter",FilterBook);
 module.exports = router;
