@@ -14,7 +14,6 @@ const {
     GetStarredBook,
     GetBookInReadingState,
     GetIdsOfUsersBooks,
-    FilterBook
 } = require('../controllers/books.controllers');
 const userAuth = require('../middlewares/user-auth');
 
@@ -107,11 +106,23 @@ const userAuth = require('../middlewares/user-auth');
  *     parameters:
  *       - in: query
  *         name: page
- *         required: true
+ *         required: false
  *         schema:
  *           type: string
  *           description: The current page, default is 1
- *     description: Provide books based on page query params
+ *       - in: query
+ *         name: lang
+ *         required: false
+ *         schema:
+ *           type: string
+ *           description: apply a filter according to the lang
+ *       - in: query
+ *         name: category
+ *         required: false
+ *         schema:
+ *           type: string
+ *           description: The current page, default is 1
+ *     description: Provide books based on page,lang or category query params
  *     tags:
  *       - Books
  *     responses:
@@ -392,5 +403,4 @@ router.get('/progress/',userAuth, GetBookInReadingState);
  */
 router.get('/list-book-history',userAuth, GetIdsOfUsersBooks);
 
-router.get("/filter",FilterBook);
 module.exports = router;

@@ -10,7 +10,7 @@ async function authUser(req, res, next) {
   }
 
   token = token.split(' ')[1];
-
+  
   const decodedData = jwt.verify(
     token,
     process.env.JWT_SECRET,

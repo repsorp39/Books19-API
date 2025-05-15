@@ -7,24 +7,27 @@ const UserHistory        = require("../models/UserHistory");
 const assertItIsAMongoId = require("../helpers/mongo-id-checker");
 
 
-const GetBooks = asyncHandler(
-    async (req,res,next)=>{
+const  GetBooks = asyncHandler( 
+    async (req,res,next) =>{
         const MAX_BOOKS_BY_REQUEST = 6;
+        const { category, lang } = req.query;
         const page = Number(req.query.page) || 1;
-        const totalPage = Math.ceil((await Book.countDocuments({})) / MAX_BOOKS_BY_REQUEST)  ;
-        
-        const books = await Book.find()
+
+        //if there is any filter active
+        const rules = {};
+        if(category) rules.categories = { $regex: new RegExp(`^${category}$`,'i')};
+        if(lang) rules.languages = { $regex: new RegExp(`^${lang}$`,'i')};
+        const totalPage = Math.ceil((await Book.countDocuments(rules)) / MAX_BOOKS_BY_REQUEST);
+       
+        const books = await Book.find(rules)
             .skip((page - 1) * MAX_BOOKS_BY_REQUEST) //skip function don't return the first n number occurence give in params
             .limit(MAX_BOOKS_BY_REQUEST);
 
-        res.status(200).json({
+        return res.status(200).json({
             totalPage,
-            page,
             books
         });
-    }
-);
-
+});
 
 const GetSingleBook = asyncHandler(
     async (req,res,next) =>{
@@ -72,16 +75,7 @@ const GetBookByCategory = asyncHandler(
     }
 );
 
-const FilterBook = asyncHandler( 
-    async (req,res,next) =>{
-        const { category ,lang } = req.query;
 
-        const rules = {};
-        if(category) rules.categories = { $regex: new RegExp(`^${category}$`,'i')};
-        if(lang) rules.languages = { $regex: new RegExp(`^${lang}$`,'i')};
-        const books = await Book.find(rules);
-        return res.status(200).json({ books });
-});
 
 //This controller allow user to set a book as starred, downloaded or bookmarked
 const SetUserBookState = asyncHandler(
@@ -248,5 +242,4 @@ module.exports = {
     GetDownloadedBook,
     GetIdsOfUsersBooks,
     GetBookInReadingState,
-    FilterBook
 };

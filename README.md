@@ -29,16 +29,6 @@ Books19 uses **JWT** for authentication. After login or registration, you'll rec
   Authorization: Bearer <your-token>
 ```
 
----
-
-## 📘 API Endpoints
-
-| Method | Endpoint                | Description         | Auth Required |
-| ------ | ----------------------- | ------------------- | ------------- |
-| POST   | `/api/v1/auth/register` | Register a new user | ❌            |
-| POST   | `/api/v1/auth/login`    | Login a user        | ❌            |
-
----
 
 ## 📂 Project Structure
 ``` test
@@ -59,7 +49,7 @@ books19-api/
 
 ## 📄 API Documentation
 
-Swagger UI is available at: [Swagger](http://localhost:3000/api-docs)
+Swagger UI is available at: [Swagger](http://localhost:3500/api-docs)
 
 ---
 
