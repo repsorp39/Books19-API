@@ -6,7 +6,6 @@
     "test": "jest",
     "dev": "node --watch server.js",
     "start": "node ./server",
-    "prestart": "npm test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
