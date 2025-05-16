@@ -6,7 +6,7 @@ const cookieParser      = require("cookie-parser");
 const swaggerUi         = require('swagger-ui-express');
 const swaggerJSDoc      = require('swagger-jsdoc');
 const { createServer }  = require("http");
-const morgan            = require("morgan");
+//const morgan            = require("morgan");
 
 const { errorHandler } = require("./middlewares/error-handler");
 const rateLimiter = require("./config/rate-limiter");
