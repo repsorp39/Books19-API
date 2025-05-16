@@ -15,7 +15,7 @@ const app = express();
 
 
 
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 
 app.use(rateLimiter);
 
@@ -67,6 +67,11 @@ app.use("/", express.static(path.join(__dirname,"public")));
 //routes
 app.use("/api/v1/auth",require("./routes/auth.route"));
 app.use("/api/v1/books",require("./routes/books.route"));
+
+//For monitoring
+app.get("/uptown-robot",(req,res,next)=>{
+    res.send("My API is still running!");
+})
 //error handling
 app.use(errorHandler);
 
