@@ -13,9 +13,7 @@ const rateLimiter = require("./config/rate-limiter");
 
 const app = express();
 
-
-
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 
 app.use(rateLimiter);
 
